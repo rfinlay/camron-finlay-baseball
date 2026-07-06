@@ -85,7 +85,7 @@ async function loadSchedule(){
     // single source of truth: rebuild the "Upcoming" list from whatever the
     // calendar actually has (ICS feed OR local JSON), so the two never diverge.
     eventsSet:(events)=>renderUpcoming(events.map(e=>({
-      title:e.title, start:e.start, allDay:e.allDay,
+      title:e.title, startStr:e.startStr, start:e.start,
       location:(e.extendedProps && e.extendedProps.location) || ''
     })))
   };
@@ -100,16 +100,18 @@ async function loadSchedule(){
 }
 function renderUpcoming(events){
   const up = document.getElementById('upcoming');
-  const now = new Date();
-  const list = events.map(e => ({...e, d:new Date(e.start)}))
-    .filter(e => e.d >= new Date(now.getFullYear(),now.getMonth(),now.getDate()-1))
+  const today = new Date(); today.setHours(0,0,0,0);
+  const list = events.map(e => {
+    // Use the date exactly as authored (startStr) built in LOCAL time, so the
+    // label never shifts a day from timezone parsing. Falls back to start.
+    const ds = (e.startStr || '').slice(0,10).split('-').map(Number);
+    const d = (ds.length===3 && ds[0]) ? new Date(ds[0], ds[1]-1, ds[2]) : new Date(e.start);
+    return { title:e.title, location:e.location, d };
+  }).filter(e => e.d >= new Date(today.getFullYear(), today.getMonth(), today.getDate()-1))
     .sort((a,b)=>a.d-b.d).slice(0,5);
   if (!list.length){ up.innerHTML = '<li class="upcoming__meta">Schedule updates coming soon — check back for game dates.</li>'; return; }
   up.innerHTML = list.map(e => {
-    // all-day events come through as UTC-midnight; format in UTC to avoid a
-    // day-earlier shift in western timezones. Timed games format in local time.
-    const fmt = Object.assign({month:'short',day:'numeric'}, e.allDay ? {timeZone:'UTC'} : {});
-    const dt = e.d.toLocaleDateString('en-US', fmt);
+    const dt = e.d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
     return `<li><div class="upcoming__date">${dt}</div><div class="upcoming__game">${e.title}</div><div class="upcoming__meta">${e.location||''}</div></li>`;
   }).join('');
 }
