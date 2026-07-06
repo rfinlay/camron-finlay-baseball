@@ -79,20 +79,24 @@ function renderStats(d){
 
 /* ---- schedule: ICS feed or local fallback ---- */
 async function loadSchedule(){
-  const cal = new FullCalendar.Calendar(document.getElementById('calendar'), {
+  const opts = {
     initialView:'dayGridMonth', height:'auto', firstDay:0,
     headerToolbar:{left:'prev,next',center:'title',right:'today'},
-  });
-  let events = [];
+    // single source of truth: rebuild the "Upcoming" list from whatever the
+    // calendar actually has (ICS feed OR local JSON), so the two never diverge.
+    eventsSet:(events)=>renderUpcoming(events.map(e=>({
+      title:e.title, start:e.start,
+      location:(e.extendedProps && e.extendedProps.location) || ''
+    })))
+  };
   if (ICS_FEED_URL){
-    cal.setOption('events', { url: ICS_FEED_URL, format:'ics' });
+    opts.events = { url: ICS_FEED_URL, format:'ics' };
+  } else {
+    try { opts.events = await (await fetch('data/schedule.json')).json(); }
+    catch(e){ opts.events = []; }
   }
-  try {
-    events = await (await fetch('data/schedule.json')).json();
-  } catch(e){ events = []; }
-  if (!ICS_FEED_URL) events.forEach(ev => cal.addEvent(ev));
+  const cal = new FullCalendar.Calendar(document.getElementById('calendar'), opts);
   cal.render();
-  renderUpcoming(events);
 }
 function renderUpcoming(events){
   const up = document.getElementById('upcoming');
