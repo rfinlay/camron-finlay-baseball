@@ -85,7 +85,7 @@ async function loadSchedule(){
     // single source of truth: rebuild the "Upcoming" list from whatever the
     // calendar actually has (ICS feed OR local JSON), so the two never diverge.
     eventsSet:(events)=>renderUpcoming(events.map(e=>({
-      title:e.title, start:e.start,
+      title:e.title, start:e.start, allDay:e.allDay,
       location:(e.extendedProps && e.extendedProps.location) || ''
     })))
   };
@@ -106,7 +106,10 @@ function renderUpcoming(events){
     .sort((a,b)=>a.d-b.d).slice(0,5);
   if (!list.length){ up.innerHTML = '<li class="upcoming__meta">Schedule updates coming soon — check back for game dates.</li>'; return; }
   up.innerHTML = list.map(e => {
-    const dt = e.d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    // all-day events come through as UTC-midnight; format in UTC to avoid a
+    // day-earlier shift in western timezones. Timed games format in local time.
+    const fmt = Object.assign({month:'short',day:'numeric'}, e.allDay ? {timeZone:'UTC'} : {});
+    const dt = e.d.toLocaleDateString('en-US', fmt);
     return `<li><div class="upcoming__date">${dt}</div><div class="upcoming__game">${e.title}</div><div class="upcoming__meta">${e.location||''}</div></li>`;
   }).join('');
 }
