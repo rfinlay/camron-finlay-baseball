@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Camron "CamBam" Finlay | Class of 2032 · #8 · Switch-Hitter</title>
+<meta name="description" content="Official athlete profile of Camron 'CamBam' Finlay — versatile switch-hitting infielder, Class of 2032, Detroit Prospects. Recruiting information for college and pro scouts." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23C8102E'/><text x='50' y='72' font-size='60' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'>8</text></svg>" />
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <a href="#home" class="nav__brand">
+    <span class="nav__num">8</span>
+    <span class="nav__name">CAMRON FINLAY</span>
+  </a>
+  <nav class="nav__links">
+    <a href="#about">About</a>
+    <a href="#stats">Stats</a>
+    <a href="#schedule">Schedule</a>
+    <a href="#recruiters" class="nav__cta">For Recruiters</a>
+  </nav>
+  <button class="nav__toggle" aria-label="Menu" id="navToggle"><span></span><span></span><span></span></button>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero__bg"></div>
+  <div class="hero__overlay"></div>
+  <div class="hero__inner">
+    <p class="hero__eyebrow">"CamBam" · Detroit, Michigan</p>
+    <h1 class="hero__title">CAMRON<br/>FINLAY</h1>
+    <p class="hero__sub">Class of 2032 &nbsp;·&nbsp; #8 &nbsp;·&nbsp; Switch-Hitter</p>
+    <p class="hero__pos">1B · 3B · SS · P · OF &nbsp;—&nbsp; Detroit Prospects</p>
+    <p class="hero__tag">A young utility player with a big-league dream and the work ethic to chase it.</p>
+    <div class="hero__actions">
+      <a href="#recruiters" class="btn btn--primary">For Recruiters →</a>
+      <a href="#stats" class="btn btn--ghost">View the Numbers</a>
+    </div>
+  </div>
+  <div class="hero__scroll"><span></span>Scroll</div>
+</section>
+
+<!-- MEASURABLES + HR TICKER -->
+<section class="metrics">
+  <div class="metric"><span class="metric__val">2032</span><span class="metric__key">Class</span></div>
+  <div class="metric"><span class="metric__val">5'5"</span><span class="metric__key">Height</span></div>
+  <div class="metric"><span class="metric__val">160</span><span class="metric__key">Weight (lbs)</span></div>
+  <div class="metric"><span class="metric__val">Switch</span><span class="metric__key">Bats</span></div>
+  <div class="metric"><span class="metric__val">Right</span><span class="metric__key">Throws</span></div>
+  <div class="metric metric--hr"><span class="metric__val" id="hrTicker">0</span><span class="metric__key">Home Runs</span></div>
+</section>
+
+<!-- CHAMPIONS BAND -->
+<section class="champs" id="champs">
+  <div class="champs__media"></div>
+  <div class="champs__overlay"></div>
+  <div class="champs__inner reveal">
+    <p class="champs__label">Detroit Prospects</p>
+    <h2 class="champs__title">2026 Tournament<br/>Champions</h2>
+    <p class="champs__text">Camron and the Detroit Prospects brought home the hardware in 2026 — one milestone on a long road ahead.</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about__grid">
+    <div class="about__photo reveal">
+      <img src="assets/photos/camron-comerica.jpg" alt="Camron Finlay in his #8 Detroit Prospects uniform at the ballpark" loading="lazy" />
+      <span class="about__badge">#8 · Detroit Prospects</span>
+    </div>
+    <div class="about__copy reveal">
+      <p class="section__eyebrow">The Player</p>
+      <h2 class="section__title">Meet CamBam</h2>
+      <p>Camron "CamBam" Finlay is a 12-year-old switch-hitting infielder from the Detroit area with a big-league dream and the discipline to chase it. A true five-position utility player — first base, third base, shortstop, pitcher, and the outfield — Camron gives a coaching staff a Swiss-army-knife option almost anywhere on the diamond.</p>
+      <p>He plays travel ball for the <strong>Detroit Prospects</strong>, where in 2026 his team captured a tournament championship. Switch-hitting from both sides of the plate and comfortable all over the field, he profiles as the kind of versatile, coachable player who keeps finding ways to help his team win.</p>
+      <p>Off the field, teammates, parents, and coaches know him as respectful, kind, and endlessly enthusiastic about the game. He is <strong>Class of 2032</strong> — just getting started, with his sights set on college baseball and, one day, the pros.</p>
+      <a href="https://www.perfectgame.org/Players/Playerprofile.aspx?ID=1699392" target="_blank" rel="noopener" class="about__pg">View Perfect Game Profile ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS & HIGHLIGHTS -->
+<section class="stats" id="stats">
+  <div class="section__head reveal">
+    <p class="section__eyebrow">By the Numbers</p>
+    <h2 class="section__title">Stats &amp; Highlights</h2>
+    <p class="section__note">Live season numbers, kept current by the family.</p>
+  </div>
+
+  <div class="stats__cards" id="statCards"><!-- injected by JS --></div>
+
+  <div class="stats__lower">
+    <div class="hrlog reveal">
+      <h3 class="block__title">Home Run Log</h3>
+      <ul class="hrlog__list" id="hrLog"><!-- injected by JS --></ul>
+    </div>
+    <div class="highlights reveal">
+      <h3 class="block__title">Highlight Reel</h3>
+      <div class="highlights__frame" id="highlightSlot">
+        <div class="highlights__empty">
+          <span>▶</span>
+          <p>Highlight video coming soon</p>
+        </div>
+      </div>
+      <a href="https://www.perfectgame.org/Players/Playerprofile.aspx?ID=1699392" target="_blank" rel="noopener" class="btn btn--ghost btn--sm">Perfect Game Metrics ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="schedule" id="schedule">
+  <div class="section__head reveal">
+    <p class="section__eyebrow">On the Diamond</p>
+    <h2 class="section__title">Game Schedule</h2>
+    <p class="section__note">Synced from the team calendar. Recruiters welcome at any game.</p>
+  </div>
+  <div class="schedule__grid">
+    <div class="schedule__cal reveal"><div id="calendar"></div></div>
+    <aside class="schedule__up reveal">
+      <h3 class="block__title">Upcoming Games</h3>
+      <ul class="upcoming" id="upcoming"><!-- injected by JS --></ul>
+    </aside>
+  </div>
+</section>
+
+<!-- RECRUITERS / CONTACT -->
+<section class="recruiters" id="recruiters">
+  <div class="recruiters__grid">
+    <div class="recruiters__pitch reveal">
+      <p class="section__eyebrow">For College &amp; Pro Scouts</p>
+      <h2 class="section__title">Recruit Camron</h2>
+      <p>Interested in Camron for your program, camp, showcase, or scouting list? Reach out and Ryan Finlay (Camron's dad) will follow up with film, schedule, and measurables.</p>
+      <ul class="recruiters__facts">
+        <li><span>Class</span> 2032</li>
+        <li><span>Positions</span> 1B / 3B / SS / P / OF</li>
+        <li><span>Bats / Throws</span> Switch / Right</li>
+        <li><span>Height / Weight</span> 5'5" / 160 lbs</li>
+        <li><span>Club</span> Detroit Prospects (MI)</li>
+      </ul>
+      <a href="#" class="btn btn--ghost btn--sm" id="onePager">Download One-Pager (PDF)</a>
+    </div>
+
+    <form class="rform reveal" id="recruitForm">
+      <div class="rform__row">
+        <label>Name<input type="text" name="name" required /></label>
+        <label>Organization<input type="text" name="organization" required /></label>
+      </div>
+      <div class="rform__row">
+        <label>You are a<select name="type" required>
+          <option value="">Select…</option>
+          <option>College Coach</option>
+          <option>MLB / Pro Scout</option>
+          <option>Scouting Service</option>
+          <option>Camp / Showcase</option>
+          <option>Other</option>
+        </select></label>
+        <label>Interest Level<select name="interest">
+          <option>Just learning about Camron</option>
+          <option>Following his progress</option>
+          <option>Actively recruiting</option>
+        </select></label>
+      </div>
+      <div class="rform__row">
+        <label>Email<input type="email" name="email" required /></label>
+        <label>Phone<input type="tel" name="phone" /></label>
+      </div>
+      <label>Message<textarea name="message" rows="4" required></textarea></label>
+      <button type="submit" class="btn btn--primary" id="rformBtn">Send to Camron's Family</button>
+      <p class="rform__status" id="rformStatus"></p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand"><span class="nav__num">8</span> CAMRON "CAMBAM" FINLAY</div>
+    <p class="footer__contact">Recruiting contact: <a href="mailto:ryanfinlay13@gmail.com">ryanfinlay13@gmail.com</a></p>
+    <p class="footer__disc">This is a personal athlete profile for Camron Finlay. It is not affiliated with, endorsed by, or an official site of the Detroit Prospects organization. All team names are used for factual, identifying purposes only.</p>
+    <p class="footer__copy">© <span id="yr"></span> Camron Finlay Baseball · Built with pride for a future pro.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

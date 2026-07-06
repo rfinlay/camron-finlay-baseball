@@ -1,0 +1,16 @@
+{
+  "season": "2026 Travel Season",
+  "homeRuns": 14,
+  "cards": [
+    { "k": "AVG", "v": ".412" },
+    { "k": "Home Runs", "v": "14" },
+    { "k": "RBI", "v": "38" },
+    { "k": "Stolen Bases", "v": "21" }
+  ],
+  "hrLog": [
+    { "n": 14, "note": "Championship weekend blast", "date": "Jun 2026" },
+    { "n": 13, "note": "2-run shot vs. rival club", "date": "Jun 2026" },
+    { "n": 12, "note": "Opposite-field bomb", "date": "May 2026" }
+  ],
+  "_note": "STARTER NUMBERS — replace with Camron's real stats. Keep this file current, or connect a Google Sheet via HR_SHEET_CSV_URL in js/main.js."
+}
