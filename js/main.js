@@ -1,7 +1,7 @@
 /* ===== Camron Finlay Baseball ===== */
 
 /* ---- CONFIG: connect these when ready (see CONTENT-TODO.md) ---- */
-const HR_SHEET_CSV_URL   = ""; // published Google Sheet CSV for live HR count (blank = use data/stats.json)
+const HR_SHEET_CSV_URL   = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHGBy28PYzahjIOLdcBJT6LkdrIW8dDJlEZVF9egSo6GFpChUqoa-sjsrezpfUSDW8UTRT8YxcRZc0/pub?output=csv"; // live stats sheet (Rick + Ryan edit; site reads)
 const ICS_FEED_URL       = ""; // published Outlook calendar .ics feed (blank = use data/schedule.json)
 const WEB3FORMS_ACCESS_KEY = "GET-FREE-KEY"; // create free key for ryanfinlay13@gmail.com at web3forms.com
 
@@ -35,13 +35,18 @@ function animateCount(el, target){
 
 /* ---- stats: load from Google Sheet CSV or local fallback ---- */
 async function loadStats(){
-  let data = null;
+  let sheet = null, local = null;
+  try { local = await (await fetch('data/stats.json')).json(); } catch(e){}
   if (HR_SHEET_CSV_URL){
-    try { data = parseSheet(await (await fetch(HR_SHEET_CSV_URL)).text()); } catch(e){}
+    try { sheet = parseSheet(await (await fetch(HR_SHEET_CSV_URL)).text()); } catch(e){}
   }
-  if (!data){
-    try { data = await (await fetch('data/stats.json')).json(); } catch(e){ data = fallbackStats(); }
-  }
+  const base = local || fallbackStats();
+  // stat cards + HR count come from the live sheet; HR log stays in stats.json
+  const data = {
+    homeRuns: sheet ? sheet.homeRuns : base.homeRuns,
+    cards:    (sheet && sheet.cards.length) ? sheet.cards : base.cards,
+    hrLog:    (base.hrLog && base.hrLog.length) ? base.hrLog : (sheet ? sheet.hrLog : [])
+  };
   renderStats(data);
 }
 function fallbackStats(){
@@ -49,18 +54,23 @@ function fallbackStats(){
     cards:[{k:"AVG",v:".412"},{k:"Home Runs",v:"14"},{k:"RBI",v:"38"},{k:"Stolen Bases",v:"21"}],
     hrLog:[{n:14,note:"Championship weekend blast",date:"Jun 2026"},{n:13,note:"2-run shot vs. rival club",date:"Jun 2026"},{n:12,note:"Opposite-field bomb",date:"May 2026"}] };
 }
+function fmtStat(v){
+  // baseball averages: show .412 instead of 0.412
+  return /^0\.\d+$/.test(v) ? v.replace(/^0/, '') : v;
+}
 function parseSheet(csv){
-  // expects rows: key,value  — plus optional HR log rows prefixed "hr,"
-  const lines = csv.trim().split(/\r?\n/).map(r => r.split(','));
-  const map = {}; const cards = []; const hrLog = [];
-  lines.forEach(([a,b,c]) => {
-    if(!a) return;
-    const key = a.trim().toLowerCase();
-    if (key === 'hr'){ hrLog.push({ n:+b, note:(c||'').trim(), date:'' }); }
-    else if (key === 'homeruns'){ map.homeRuns = +b; cards.push({k:'Home Runs',v:b}); }
-    else { map[key]=b; cards.push({k:a.trim(),v:(b||'').trim()}); }
+  // Sheet format: two columns "Stat, Value" with a header row.
+  const rows = csv.trim().split(/\r?\n/).map(r => r.split(','));
+  const cards = []; let homeRuns = 0;
+  rows.forEach((cells, i) => {
+    const label = (cells[0] || '').trim();
+    const val   = (cells[1] || '').trim();
+    if (!label) return;
+    if (i === 0 && /^(stat|label|metric|name)$/i.test(label)) return; // skip header
+    cards.push({ k: label, v: fmtStat(val) });
+    if (/home\s*runs?/i.test(label)) homeRuns = parseInt(val, 10) || 0;
   });
-  return { homeRuns: map.homeRuns || 0, cards, hrLog };
+  return { homeRuns, cards, hrLog: [] };
 }
 function renderStats(d){
   const hr = document.getElementById('hrTicker');
@@ -69,7 +79,7 @@ function renderStats(d){
   hio.observe(document.querySelector('.metrics'));
 
   const cards = (d.cards && d.cards.length) ? d.cards : fallbackStats().cards;
-  document.getElementById('statCards').innerHTML = cards.slice(0,4).map(c =>
+  document.getElementById('statCards').innerHTML = cards.slice(0,8).map(c =>
     `<div class="statcard"><div class="statcard__val">${c.v}</div><div class="statcard__key">${c.k}</div></div>`).join('');
 
   const log = (d.hrLog && d.hrLog.length) ? d.hrLog : fallbackStats().hrLog;
