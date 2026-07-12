@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/styles.css?v=2" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23C8102E'/><text x='50' y='72' font-size='60' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'>8</text></svg>" />
 </head>
 <body>
@@ -22,6 +22,7 @@
   </a>
   <nav class="nav__links">
     <a href="#about">About</a>
+    <a href="#gallery">Gallery</a>
     <a href="#stats">Stats</a>
     <a href="#schedule">Schedule</a>
     <a href="#recruiters" class="nav__cta">For Recruiters</a>
@@ -72,7 +73,7 @@
 <section class="about" id="about">
   <div class="about__grid">
     <div class="about__photo reveal">
-      <img src="assets/photos/camron-comerica.jpg" alt="Camron Finlay in his #8 Detroit Prospects uniform at the ballpark" loading="lazy" />
+      <img src="assets/photos/camron-studio-spotlight.jpg" alt="Studio portrait of Camron Finlay with his bat, #8 Detroit Prospects" loading="lazy" />
       <span class="about__badge">#8 · 12U Hendershot</span>
     </div>
     <div class="about__copy reveal">
@@ -83,6 +84,30 @@
       <p>Off the field, teammates, parents, and coaches know him as respectful, kind, and endlessly enthusiastic about the game. He is <strong>Class of 2032</strong> — just getting started, with his sights set on college baseball and, one day, the pros.</p>
       <a href="https://www.perfectgame.org/Players/Playerprofile.aspx?ID=1699392" target="_blank" rel="noopener" class="about__pg">View Perfect Game Profile ↗</a>
     </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="section__head reveal">
+    <p class="section__eyebrow">On the Diamond</p>
+    <h2 class="section__title">Photo Gallery</h2>
+    <p class="section__note">Game action and studio shots from the 2026 season. Tap any photo to enlarge.</p>
+  </div>
+  <div class="gallery__grid">
+    <button class="gallery__item reveal" data-full="assets/photos/camron-pitching.jpg"><img src="assets/photos/camron-pitching.jpg" alt="Camron Finlay pitching in his full windup" loading="lazy" /></button>
+    <button class="gallery__item reveal" data-full="assets/photos/camron-studio-bw.jpg"><img src="assets/photos/camron-studio-bw.jpg" alt="Black and white studio portrait of Camron Finlay in his batting stance" loading="lazy" /></button>
+    <button class="gallery__item reveal" data-full="assets/photos/camron-batting.jpg"><img src="assets/photos/camron-batting.jpg" alt="Camron Finlay at the plate in his batting stance" loading="lazy" /></button>
+    <button class="gallery__item reveal" data-full="assets/photos/camron-fielding-1.jpg"><img src="assets/photos/camron-fielding-1.jpg" alt="Camron Finlay fielding a ground ball" loading="lazy" /></button>
+    <button class="gallery__item reveal" data-full="assets/photos/camron-studio-red.jpg"><img src="assets/photos/camron-studio-red.jpg" alt="Red-lit studio photo of Camron Finlay with his bat" loading="lazy" /></button>
+    <button class="gallery__item reveal" data-full="assets/photos/camron-running.jpg"><img src="assets/photos/camron-running.jpg" alt="Camron Finlay running the bases" loading="lazy" /></button>
+    <button class="gallery__item reveal" data-full="assets/photos/camron-studio-swing.jpg"><img src="assets/photos/camron-studio-swing.jpg" alt="Studio action shot of Camron Finlay extending his bat" loading="lazy" /></button>
+    <button class="gallery__item reveal" data-full="assets/photos/camron-throwing.jpg"><img src="assets/photos/camron-throwing.jpg" alt="Camron Finlay making a throw across the infield" loading="lazy" /></button>
+    <button class="gallery__item reveal" data-full="assets/photos/camron-baserunning.jpg"><img src="assets/photos/camron-baserunning.jpg" alt="Camron Finlay breaking toward the next base" loading="lazy" /></button>
+    <button class="gallery__item reveal" data-full="assets/photos/camron-fielding-2.jpg"><img src="assets/photos/camron-fielding-2.jpg" alt="Camron Finlay fielding in the infield" loading="lazy" /></button>
+    <button class="gallery__item reveal" data-full="assets/photos/camron-studio-supra.jpg"><img src="assets/photos/camron-studio-supra.jpg" alt="Camron Finlay with his Supra bat, studio shot" loading="lazy" /></button>
+    <button class="gallery__item reveal" data-full="assets/photos/camron-ready.jpg"><img src="assets/photos/camron-ready.jpg" alt="Camron Finlay set in his ready position at the field" loading="lazy" /></button>
+    <button class="gallery__item reveal" data-full="assets/photos/camron-finlay-8.jpg"><img src="assets/photos/camron-finlay-8.jpg" alt="Back of Camron Finlay's jersey reading FINLAY 8" loading="lazy" /></button>
   </div>
 </section>
 
@@ -188,6 +213,24 @@
   </div>
 </footer>
 
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox__close" id="lightboxClose" aria-label="Close">&times;</button>
+  <img class="lightbox__img" id="lightboxImg" src="" alt="Enlarged photo of Camron Finlay" />
+</div>
+<script>
+(function(){
+  var lb=document.getElementById('lightbox'), img=document.getElementById('lightboxImg');
+  function open(src){img.src=src;lb.classList.add('open');lb.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+  function close(){lb.classList.remove('open');lb.setAttribute('aria-hidden','true');document.body.style.overflow='';img.src='';}
+  document.querySelectorAll('.gallery__item').forEach(function(b){
+    b.addEventListener('click',function(){open(b.getAttribute('data-full'));});
+  });
+  document.getElementById('lightboxClose').addEventListener('click',close);
+  lb.addEventListener('click',function(e){if(e.target===lb)close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/ical.js@1.5.0/build/ical.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/icalendar@6.1.11/index.global.min.js"></script>
